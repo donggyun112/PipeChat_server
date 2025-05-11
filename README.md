@@ -1037,41 +1037,36 @@ WebRTC 연결 설정, 미디어 스트림 처리, 사용자 인터랙션 및 서
 
 ```mermaid
 sequenceDiagram
-	participant Client (app.js)
-	participant Server (server.py)
-	participant BotPipeline (run_bot.py)
-
-	Client->>Server: HTTP POST /offer (연결 요청)
-	activate Server
-	Server-->>Client: ICE 서버 정보
-	deactivate Server
-
-	Client->>Server: HTTP POST /offer (SDP Offer)
-	activate Server
-	Server->>BotPipeline: run_bot(connection, transport) 시작
-	activate BotPipeline
-	Server-->>Client: SDP Answer
-	deactivate Server
-
-	loop ICE Candidate 교환
-		Client->>Server: HTTP POST /ice (Candidate)
-		activate Server
-		Server-->>Client: (필요시) Candidate
-		deactivate Server
-	end
-
-	BotPipeline->>Client: BotReady (via RTVIProcessor & transport)
-	Client<->>BotPipeline: WebRTC 미디어 스트림 (오디오/비디오)
-	
-	Note over Client, BotPipeline: 사용자와 봇 실시간 상호작용
-
-	Client->>Server: 연결 종료 요청 (예: stopButton 클릭)
-	activate Server
-	Server->>BotPipeline: 파이프라인 태스크 취소
-	BotPipeline-->>Server: 정리 완료
-	deactivate BotPipeline
-	Server-->>Client: 연결 종료 확인
-	deactivate Server
+    participant Client (app.js)
+    participant Server (server.py)
+    participant BotPipeline (run_bot.py)
+    Client->>Server: HTTP POST /offer (연결 요청)
+    activate Server
+    Server-->>Client: ICE 서버 정보
+    deactivate Server
+    Client->>Server: HTTP POST /offer (SDP Offer)
+    activate Server
+    Server->>BotPipeline: run_bot(connection, transport) 시작
+    activate BotPipeline
+    Server-->>Client: SDP Answer
+    deactivate Server
+    loop ICE Candidate 교환
+        Client->>Server: HTTP POST /ice (Candidate)
+        activate Server
+        Server-->>Client: (필요시) Candidate
+        deactivate Server
+    end
+    BotPipeline->>Client: BotReady (via RTVIProcessor & transport)
+    Client<<->>BotPipeline: WebRTC 미디어 스트림 (오디오/비디오)
+    
+    Note over Client, BotPipeline: 사용자와 봇 실시간 상호작용
+    Client->>Server: 연결 종료 요청 (예: stopButton 클릭)
+    activate Server
+    Server->>BotPipeline: 파이프라인 태스크 취소
+    BotPipeline-->>Server: 정리 완료
+    deactivate BotPipeline
+    Server-->>Client: 연결 종료 확인
+    deactivate Server
 ```
 
 **흐름 설명:**
