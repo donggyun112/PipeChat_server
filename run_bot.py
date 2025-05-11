@@ -16,7 +16,7 @@ from debug_tools.logging_processor import LoggingProcessor
 from pipecat.transports.network.small_webrtc import SmallWebRTCTransport
 from pipecat.transports.network.webrtc_connection import SmallWebRTCConnection
 from pipecat.processors.frameworks.rtvi import RTVIConfig, RTVIObserver, RTVIProcessor
-from pipecat.services.deepgram.stt import DeepgramSTTService
+from pipecat.services.deepgram.tts import DeepgramTTSService
 from deepgram import LiveOptions
 from typing import Optional
 import asyncio
@@ -34,12 +34,12 @@ async def run_bot(connection: SmallWebRTCConnection, transport: SmallWebRTCTrans
 		logger_proc = LoggingProcessor()
 		
 
-		llm_model = "gemini-2.0-flash"
+		llm_model = "gemini-2.0-flash-lite"
 		llm_system_prompt = "You are a fast, low-latency chatbot. Respond to what the user said in a creative and helpful way, but keep responses short and legible. Ensure responses contain only words. Check again that you have not included special characters other than '?' or '!'."
 		tts_speed = 1.2
 
 		llm = GoogleLLMService(
-			api_key=os.getenv("GOOGLE_API_KEY"),
+			api_key=os.getenv("GEMINI_API_KEY"),
 			model=llm_model,
 			params=GoogleLLMService.InputParams(temperature=1, language=Language.KO_KR, thinking_budget=0),
 			system_prompt=llm_system_prompt
@@ -58,11 +58,18 @@ async def run_bot(connection: SmallWebRTCConnection, transport: SmallWebRTCTrans
 			latency_interval=0
 		)
 
-		tts = TTSPipecService(
-			voice="KR",
-			speed=tts_speed,
-			Language=Language.KO,
+		# tts = TTSPipecService(
+		# 	voice="KR",
+		# 	speed=tts_speed,
+		# 	Language=Language.KO,
+		# )
+
+		tts = DeepgramTTSService(
+			api_key=os.getenv("DEEPGRAM_API_KEY"),
+			voice="aura-helios-en",
+			sample_rate=24000
 		)
+			
 		
 		weather_function = FunctionSchema(
 			name="get_current_weather",

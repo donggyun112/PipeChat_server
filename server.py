@@ -21,6 +21,7 @@ from pipecat.pipeline.task import PipelineTask
 from pipecat.services.simli.video import SimliVideoService
 from pipecat.audio.filters.noisereduce_filter import NoisereduceFilter
 from vad.vad_analyze import CustomVADAnalyzer
+from pipecat.services.openai.llm import OpenAILLMService
 
 from run_bot import run_bot
 
