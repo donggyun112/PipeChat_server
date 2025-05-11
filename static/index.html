@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipecat RTVI 비디오·음성 클라이언트</title>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "@pipecat-ai/client-js": "https://cdn.jsdelivr.net/npm/@pipecat-ai/client-js@0.3.5/+esm",
+      "@pipecat-ai/small-webrtc-transport": "https://cdn.jsdelivr.net/npm/@pipecat-ai/small-webrtc-transport@0.0.4/+esm"
+    }
+  }
+  </script>
+</head>
+<body>
+  <h1>Pipecat 비디오·음성 클라이언트</h1>
+
+  <div class="control-bar">
+    <button id="startButton" class="primary">연결 시작</button>
+    <button id="stopButton" class="danger" disabled>연결 종료</button>
+  </div>
+
+  <div class="video-wrapper">
+    <video id="botVideo" autoplay playsinline muted></video>
+  </div>
+
+  <div class="latency-container">
+    <div id="sttLatency" class="latency-item">
+      <div class="latency-label">STT 레이턴시</div>
+      <div class="latency-current">---</div>
+      <div class="latency-avg">평균: ---</div>
+    </div>
+    <div id="llmLatency" class="latency-item">
+      <div class="latency-label">LLM 레이턴시</div>
+      <div class="latency-current">---</div>
+      <div class="latency-avg">평균: ---</div>
+    </div>
+    <div id="ttsLatency" class="latency-item">
+      <div class="latency-label">TTS 레이턴시</div>
+      <div class="latency-current">---</div>
+      <div class="latency-avg">평균: ---</div>
+    </div>
+    <div id="totalLatency" class="latency-item">
+      <div class="latency-label">총 레이턴시</div>
+      <div class="latency-current">---</div>
+      <div class="latency-avg">평균: ---</div>
+    </div>
+  </div>
+  <audio id="botAudio" autoplay></audio>
+
+  <script type="module" src="src/app.js"></script>
+  <link rel="stylesheet" href="src/style.css">
+</body>
+</html>
