@@ -704,7 +704,7 @@ PipeChat_server에서 "음성 합성(TTS) 및 아바타 연동(Simli)"은 사용
 		def __init__(
 			self,
 			*,
-			server_address: str = "211.105.40.72", # TTS 서버 주소
+			server_address: str = "*", # TTS 서버 주소
 			command_port: int = 5555,             # 명령어 포트
 			audio_port: int = 5556,               # 오디오 수신 포트
 			default_voice: str = "KR",            # 기본 음성
